@@ -2,7 +2,6 @@ var app = require('http').createServer(handler)
   , io = require('socket.io').listen(app)
   , fs = require('fs')
   , path = require('path')
-  , requests = require('./requests.js')
   , zmq = require('zmq')
   
   
