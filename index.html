@@ -7,7 +7,7 @@
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.20/jquery-ui.min.js"></script>
-		<link type="texxt/css" rel="styylesheet" href="http://jquery-ui.googlecode.com/svn/tags/1.8.21/themes/smoothness/jquery.ui.all.css">
+		<link type="text/css" rel="stylesheet" href="http://jquery-ui.googlecode.com/svn/tags/1.8.21/themes/smoothness/jquery.ui.all.css">
 		<style type="text/css">
 			#update {
 				font-family: "Verdana";
@@ -25,13 +25,16 @@
 	</body>
 	<script>
 	$(function (){
+		var $slider = $('#master').slider();
 		var $valor = $('#valor');
 	  var socket = io.connect('http://localhost');
 	  socket.on('news', function (data) {
 	  	try {
-		    var d = $.parseJSON(data);
-		    $valor.text(d['value_update']);
-	  		
+	  		if (typeof(data) == "string")
+		    	var data = $.parseJSON(data);
+		    var v = data['value_update'];
+		    $valor.text(v);
+	  		$slider.slider('value', v);
 	  	} catch(e){
 	  		console.error("Error: ", data);
 	  	}
