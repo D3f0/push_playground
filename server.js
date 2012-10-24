@@ -1,12 +1,10 @@
-var app = require('http').createServer(handler)
-  , io = require('socket.io').listen(app)
+var http = require('http')
+  , socketio = require('socket.io')
   , fs = require('fs')
   , path = require('path')
   , zmq = require('zmq')
   
   
-  
-app.listen(8000);
 
 function handler (request, response) {
 	var filePath = '.' + request.url;
@@ -37,8 +35,11 @@ function handler (request, response) {
 	  }
 	
 	});
-}	
+}
 
+app = http.createServer(handler);
+app.listen(8080);
+io = socketio.listen(app);
 
 var clientSockets = [];
 function addClientSocket(socket){

@@ -35,12 +35,15 @@ class Ventana(QMainWindow):
         self.spin = QSpinBox()
         layout.addWidget(self.spin)
         self.statusBar().showMessage("zmq.PUSH (NOWAIT) on %s" % ADDR)
+        self.button = QPushButton("New Browser")
+        layout.addWidget(self.button)
         self.setCentralWidget(centralWdiget)
-    
+
     
     def setupSignals(self):
         self.slider.valueChanged.connect(self.valueChanged)
         self.spin.valueChanged.connect(self.valueChanged)
+        self.button.pressed.connect(self.lanuchBrowser)
         
     def valueChanged(self, value):
         self.lcd.display(value)
@@ -53,7 +56,9 @@ class Ventana(QMainWindow):
         except zmq.ZMQError as e:
             pass # Can't be delivered
         
-        
+    def lanuchBrowser(self):    
+        import webbrowser
+        webbrowser.open_new('http://localhost:8080')
     
     def setupCommunication(self):
         context = zmq.Context()
